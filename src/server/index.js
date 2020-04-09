@@ -2,7 +2,6 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 var path = require('path')
-const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
 const aylien = require('aylien_textapi')
 
@@ -13,9 +12,28 @@ const textapi = new aylien({
     application_key: process.env.API_KEY
 });
 
-const app = express()
+
+// Require Express to run server and routes
+const express = require('express');
+
+
+// Start up an instance of app
+const app = express();
+
+/* Dependencies */
+const bodyParser = require('body-parser');
+
+/* Middleware*/
+//Here we are configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Cors for cross origin allowance
+const cors = require('cors');
+app.use(cors());
 
 app.use(express.static('dist'))
+
 
 console.log(__dirname)
 
@@ -31,11 +49,27 @@ app.listen(8081, function () {
 
 app.get('/test', function (req, res) {
     textapi.sentiment({
-        'text': 'John is a very good football player!'
+        'text': 'John Wick'
     }, function(error, response) {
         if (error === null) {
             console.log(response);
+            res.send(response);
+        } else {
+            console.log(error);
         }
     });
-    res.send(mockAPIResponse);
+})
+
+app.post('/check', (req, res) => {
+    let data = req.body;
+    textapi.sentiment({
+        'url': data.formText
+    }, function(error, response){
+        if (error === null) {
+            console.log(response);
+            res.send(response);
+        } else {
+            console.log(error);
+        }
+    });
 })

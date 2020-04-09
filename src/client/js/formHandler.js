@@ -19,17 +19,7 @@ function handleSubmit(event) {
         })
         .then(res => res.json())
         .then(function(res) {
-            console.log(res);
-            const results = document.getElementById('results');
-            const polarity = document.createElement('H2');
-            const subjectivity = document.createElement('H3');
-            const textEvaluated = document.createElement('P');
-            polarity.innerHTML = `Polarity: ${res.polarity}`;
-            subjectivity.innerHTML = `Subjectivity: ${res.subjectivity}`;
-            textEvaluated.innerHTML = res.text;
-            results.appendChild(polarity);
-            results.appendChild(subjectivity);
-            results.appendChild(textEvaluated);
+            Client.addResults(res.polarity, res.subjectivity, res.text);
         })
 
     }
