@@ -5,6 +5,9 @@ var path = require('path')
 const mockAPIResponse = require('./mockAPI.js')
 const aylien = require('aylien_textapi')
 
+//For testing
+const fetch = require('node-fetch')
+
 
 // set aylien API credentials
 const textapi = new aylien({

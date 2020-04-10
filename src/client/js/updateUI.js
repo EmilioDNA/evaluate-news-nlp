@@ -12,5 +12,13 @@ const addResults = (polarity, subjectivity, text) => {
     results.appendChild(textEvaluated);
 }
 
+const cleanResults = () => {
+    const results = document.getElementById('results');
+    while (results.firstChild) {
+        console.log("Cleaning children");
+        results.removeChild(results.firstChild);
+    }
 
-export { addResults } 
+}
+
+export { addResults, cleanResults } 
